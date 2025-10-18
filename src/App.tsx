@@ -5,20 +5,22 @@ import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import Dashboard from './components/Dashboard/Dashboard';
 import ProblemDiscoveryDashboard from './components/ProblemDiscovery/ProblemDiscoveryDashboard';
-import ProblemDiscoveryWizard from './components/ProblemDiscovery/ProblemDiscoveryWizard';
+import SimplifiedDiscoveryForm from './components/ProblemDiscovery/SimplifiedDiscoveryForm';
 import SolutionValidationGuide from './components/SolutionValidation/SolutionValidationGuide';
 import OpportunityList from './components/Opportunities/OpportunityList';
 import MethodologyLibraryDashboard from './components/MethodologyLibrary/MethodologyLibraryDashboard';
 import OpportunityCanvasDetail from './components/MethodologyLibrary/OpportunityCanvasDetail';
+import PracticeGuidePage from './components/PracticeGuide/PracticeGuidePage';
+import CommunityPage from './components/Community/CommunityPage';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [discoveryFlow, setDiscoveryFlow] = useState<'dashboard' | 'wizard' | 'validation'>('dashboard');
+  const [discoveryFlow, setDiscoveryFlow] = useState<'dashboard' | 'form' | 'validation'>('dashboard');
   const [methodologyView, setMethodologyView] = useState<'library' | 'detail'>('library');
   const [currentProblemData, setCurrentProblemData] = useState(null);
 
   const handleStartDiscovery = () => {
-    setDiscoveryFlow('wizard');
+    setDiscoveryFlow('form');
   };
 
   const handleDiscoveryComplete = (discoveryData: any) => {
@@ -40,9 +42,9 @@ function App() {
   const renderContent = () => {
     if (activeTab === 'discovery') {
       switch (discoveryFlow) {
-        case 'wizard':
+        case 'form':
           return (
-            <ProblemDiscoveryWizard
+            <SimplifiedDiscoveryForm
               onComplete={handleDiscoveryComplete}
               onBack={handleBackToDiscovery}
             />
@@ -76,18 +78,15 @@ function App() {
         return <Dashboard />;
       case 'opportunities':
         return <OpportunityList />;
+      case 'practice':
+        return <PracticeGuidePage />;
+      case 'community':
+        return <CommunityPage />;
       case 'analytics':
         return (
           <div className="glass-card p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Discovery Analytics</h2>
             <p className="text-gray-600">Insights into your problem discovery effectiveness coming soon...</p>
-          </div>
-        );
-      case 'team':
-        return (
-          <div className="glass-card p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Team Collaboration</h2>
-            <p className="text-gray-600">Collaborative problem discovery features coming soon...</p>
           </div>
         );
       case 'settings':
