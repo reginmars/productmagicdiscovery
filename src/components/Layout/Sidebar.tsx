@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
         <div className="glass-card p-4">
           <h3 className="font-semibold text-gray-800 mb-2">💡 Pro Tip</h3>
           <p className="text-xs text-gray-600">
-            Always validate problems with real user data before jumping to solutions.
+            Check out the Methodology Library for proven discovery frameworks from IDEO, Google, and more!
           </p>
         </div>
       </div>

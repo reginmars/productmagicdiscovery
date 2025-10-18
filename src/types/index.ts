@@ -8,6 +8,7 @@ export interface User {
 
 export interface ProblemDiscovery {
   id: string;
+  industry?: string;
   problemDescription: string;
   affectedUsers: string;
   evidence: string;
