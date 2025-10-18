@@ -6,6 +6,55 @@ export interface User {
   avatar?: string;
 }
 
+export interface ProblemDiscovery {
+  id: string;
+  problemDescription: string;
+  affectedUsers: string;
+  evidence: string;
+  businessImpact: string;
+  successCriteria: string;
+  status: 'draft' | 'analyzing' | 'validated' | 'hmw_generated';
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+  analysis?: ProblemAnalysis;
+  hmwStatements?: HMWStatement[];
+}
+
+export interface ProblemAnalysis {
+  id: string;
+  discoveryId: string;
+  rootCauses: string[];
+  userPainPoints: string[];
+  marketValidation: MarketValidation;
+  competitorInsights: string[];
+  keyFindings: string[];
+  recommendedFocus: string;
+  confidenceScore: number;
+  analyzedAt: Date;
+}
+
+export interface MarketValidation {
+  marketSize: string;
+  growthTrend: string;
+  competitorSolutions: string[];
+  industryBenchmarks: string[];
+  userDemand: string;
+  validationSources: string[];
+}
+
+export interface HMWStatement {
+  id: string;
+  statement: string;
+  rationale: string;
+  targetOutcome: string;
+  potentialSolutions: string[];
+  priority: 'high' | 'medium' | 'low';
+  feasibility: number;
+  impact: number;
+  selected: boolean;
+}
+
 export interface OpportunityCanvas {
   id: string;
   title: string;
@@ -25,6 +74,8 @@ export interface OpportunityCanvas {
   createdAt: Date;
   updatedAt: Date;
   version: number;
+  discoveryId?: string;
+  hmwStatementId?: string;
 }
 
 export interface KPI {

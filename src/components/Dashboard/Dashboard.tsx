@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 import { Search, Target, CheckCircle, TrendingUp, Users, Lightbulb, ArrowRight } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+  onStartDiscovery: () => void;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ onStartDiscovery }) => {
   const { opportunities, user } = useStore();
 
   const stats = {
@@ -81,7 +85,10 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
           <div className="ml-8">
-            <button className="glass-button bg-primary-600 text-white px-6 py-3 flex items-center gap-2">
+            <button 
+              onClick={onStartDiscovery}
+              className="glass-button bg-primary-600 text-white px-6 py-3 flex items-center gap-2 hover:bg-primary-700 transition-colors"
+            >
               Start Problem Discovery
               <ArrowRight size={16} />
             </button>
@@ -210,14 +217,14 @@ const Dashboard: React.FC = () => {
         {/* Discovery Process Guide */}
         <div>
           <div className="glass-card p-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Discovery Process</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">5 Discovery Questions</h3>
             <div className="space-y-4">
               {[
-                { step: 1, title: 'Observe Symptoms', desc: 'Identify observable issues', color: 'amber' },
-                { step: 2, title: 'Validate with Data', desc: 'Gather supporting evidence', color: 'blue' },
-                { step: 3, title: 'Analyze Root Causes', desc: 'Understand why problems occur', color: 'purple' },
-                { step: 4, title: 'Define Problem', desc: 'Craft actionable statements', color: 'green' },
-                { step: 5, title: 'Plan Solutions', desc: 'Develop validation strategy', color: 'indigo' }
+                { step: 1, title: 'What problem?', desc: 'Observable symptoms', color: 'amber' },
+                { step: 2, title: 'Who affected?', desc: 'User segments', color: 'blue' },
+                { step: 3, title: 'What evidence?', desc: 'Data & validation', color: 'purple' },
+                { step: 4, title: 'What impact?', desc: 'Business consequences', color: 'red' },
+                { step: 5, title: 'What success?', desc: 'Measurable outcomes', color: 'green' }
               ].map((item) => (
                 <div key={item.step} className="flex items-center gap-3">
                   <div className={`w-8 h-8 rounded-full bg-${item.color}-100 text-${item.color}-600 flex items-center justify-center text-sm font-medium`}>
@@ -231,7 +238,10 @@ const Dashboard: React.FC = () => {
               ))}
             </div>
             
-            <button className="w-full mt-6 glass-button bg-primary-600 text-white py-3">
+            <button 
+              onClick={onStartDiscovery}
+              className="w-full mt-6 glass-button bg-primary-600 text-white py-3 hover:bg-primary-700 transition-colors"
+            >
               Start Guided Discovery
             </button>
           </div>

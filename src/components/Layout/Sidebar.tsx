@@ -8,8 +8,7 @@ import {
   BarChart3, 
   Users, 
   Settings,
-  Lightbulb,
-  GraduationCap
+  Lightbulb
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -23,9 +22,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'discovery', label: 'Problem Discovery', icon: Search },
     { id: 'opportunities', label: 'Opportunities', icon: Target },
     { id: 'frameworks', label: 'Methodology Library', icon: BookOpen },
-    { id: 'practice', label: 'Practice Guide', icon: GraduationCap },
     { id: 'analytics', label: 'Discovery Analytics', icon: BarChart3 },
-    { id: 'community', label: 'Community', icon: Users },
+    { id: 'team', label: 'Team Collaboration', icon: Users },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 

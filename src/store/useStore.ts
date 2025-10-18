@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User, OpportunityCanvas, Framework } from '../types';
+import { User, OpportunityCanvas, Framework, ProblemDiscovery } from '../types';
 import { frameworks } from '../data/frameworks';
 
 interface AppState {
@@ -7,6 +7,8 @@ interface AppState {
   opportunities: OpportunityCanvas[];
   frameworks: Framework[];
   currentOpportunity: OpportunityCanvas | null;
+  discoveries: ProblemDiscovery[];
+  currentDiscovery: ProblemDiscovery | null;
   
   // Actions
   setUser: (user: User) => void;
@@ -15,6 +17,9 @@ interface AppState {
   updateOpportunity: (id: string, updates: Partial<OpportunityCanvas>) => void;
   setCurrentOpportunity: (opportunity: OpportunityCanvas | null) => void;
   setFrameworks: (frameworks: Framework[]) => void;
+  addDiscovery: (discovery: ProblemDiscovery) => void;
+  updateDiscovery: (id: string, updates: Partial<ProblemDiscovery>) => void;
+  setCurrentDiscovery: (discovery: ProblemDiscovery | null) => void;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -120,6 +125,8 @@ export const useStore = create<AppState>((set, get) => ({
   ],
   frameworks: frameworks,
   currentOpportunity: null,
+  discoveries: [],
+  currentDiscovery: null,
 
   setUser: (user) => set({ user }),
   
@@ -140,5 +147,20 @@ export const useStore = create<AppState>((set, get) => ({
   
   setCurrentOpportunity: (opportunity) => set({ currentOpportunity: opportunity }),
   
-  setFrameworks: (frameworks) => set({ frameworks })
+  setFrameworks: (frameworks) => set({ frameworks }),
+
+  addDiscovery: (discovery) => set((state) => ({
+    discoveries: [...state.discoveries, discovery]
+  })),
+
+  updateDiscovery: (id, updates) => set((state) => ({
+    discoveries: state.discoveries.map(disc => 
+      disc.id === id ? { ...disc, ...updates } : disc
+    ),
+    currentDiscovery: state.currentDiscovery?.id === id 
+      ? { ...state.currentDiscovery, ...updates }
+      : state.currentDiscovery
+  })),
+
+  setCurrentDiscovery: (discovery) => set({ currentDiscovery: discovery })
 }));

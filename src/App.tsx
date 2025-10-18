@@ -4,84 +4,81 @@ import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import Dashboard from './components/Dashboard/Dashboard';
-import ProblemDiscoveryDashboard from './components/ProblemDiscovery/ProblemDiscoveryDashboard';
-import SimplifiedDiscoveryForm from './components/ProblemDiscovery/SimplifiedDiscoveryForm';
-import SolutionValidationGuide from './components/SolutionValidation/SolutionValidationGuide';
+import ProblemDiscoveryPage from './components/ProblemDiscovery/ProblemDiscoveryPage';
+import AnalysisPage from './components/ProblemDiscovery/AnalysisPage';
 import OpportunityList from './components/Opportunities/OpportunityList';
-import MethodologyLibraryDashboard from './components/MethodologyLibrary/MethodologyLibraryDashboard';
-import OpportunityCanvasDetail from './components/MethodologyLibrary/OpportunityCanvasDetail';
-import PracticeGuidePage from './components/PracticeGuide/PracticeGuidePage';
-import CommunityPage from './components/Community/CommunityPage';
+import { ProblemDiscovery } from './types';
+
+type ViewState = 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'frameworks' | 'analytics' | 'team' | 'settings';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [discoveryFlow, setDiscoveryFlow] = useState<'dashboard' | 'form' | 'validation'>('dashboard');
-  const [methodologyView, setMethodologyView] = useState<'library' | 'detail'>('library');
-  const [currentProblemData, setCurrentProblemData] = useState(null);
+  const [activeTab, setActiveTab] = useState<ViewState>('dashboard');
+  const [currentDiscovery, setCurrentDiscovery] = useState<ProblemDiscovery | null>(null);
 
   const handleStartDiscovery = () => {
-    setDiscoveryFlow('form');
+    setActiveTab('discovery');
   };
 
-  const handleDiscoveryComplete = (discoveryData: any) => {
-    setCurrentProblemData(discoveryData);
-    setDiscoveryFlow('validation');
+  const handleProceedToAnalysis = (discovery: ProblemDiscovery) => {
+    setCurrentDiscovery(discovery);
+    setActiveTab('analysis');
   };
 
-  const handleValidationComplete = (validationPlan: any) => {
-    console.log('Complete opportunity:', { ...currentProblemData, validationPlan });
-    setDiscoveryFlow('dashboard');
-    setCurrentProblemData(null);
+  const handleProceedToHMW = (discovery: ProblemDiscovery) => {
+    setCurrentDiscovery(discovery);
+    setActiveTab('hmw');
   };
 
-  const handleBackToDiscovery = () => {
-    setDiscoveryFlow('dashboard');
-    setCurrentProblemData(null);
+  const handleBackFromDiscovery = () => {
+    setActiveTab('dashboard');
+    setCurrentDiscovery(null);
+  };
+
+  const handleBackFromAnalysis = () => {
+    setActiveTab('discovery');
   };
 
   const renderContent = () => {
-    if (activeTab === 'discovery') {
-      switch (discoveryFlow) {
-        case 'form':
-          return (
-            <SimplifiedDiscoveryForm
-              onComplete={handleDiscoveryComplete}
-              onBack={handleBackToDiscovery}
-            />
-          );
-        case 'validation':
-          return (
-            <SolutionValidationGuide
-              problemData={currentProblemData}
-              onComplete={handleValidationComplete}
-            />
-          );
-        default:
-          return (
-            <ProblemDiscoveryDashboard
-              onStartDiscovery={handleStartDiscovery}
-            />
-          );
-      }
-    }
-
-    if (activeTab === 'frameworks') {
-      return methodologyView === 'library' ? (
-        <MethodologyLibraryDashboard />
-      ) : (
-        <OpportunityCanvasDetail />
-      );
-    }
-
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard onStartDiscovery={handleStartDiscovery} />;
+      
+      case 'discovery':
+        return (
+          <ProblemDiscoveryPage
+            onBack={handleBackFromDiscovery}
+            onProceedToAnalysis={handleProceedToAnalysis}
+          />
+        );
+      
+      case 'analysis':
+        return currentDiscovery ? (
+          <AnalysisPage
+            discovery={currentDiscovery}
+            onBack={handleBackFromAnalysis}
+            onProceedToHMW={handleProceedToHMW}
+          />
+        ) : null;
+      
+      case 'hmw':
+        return (
+          <div className="glass-card p-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">"How Might We" Statement Generation</h2>
+            <p className="text-gray-600">Coming next: Generate 2-3 HMW statements from your validated problem...</p>
+          </div>
+        );
+      
       case 'opportunities':
         return <OpportunityList />;
-      case 'practice':
-        return <PracticeGuidePage />;
-      case 'community':
-        return <CommunityPage />;
+      
+      case 'frameworks':
+        return (
+          <div className="glass-card p-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Methodology Library</h2>
+            <p className="text-gray-600">Access to proven frameworks and methodologies coming soon...</p>
+          </div>
+        );
+      
       case 'analytics':
         return (
           <div className="glass-card p-8 text-center">
@@ -89,6 +86,15 @@ function App() {
             <p className="text-gray-600">Insights into your problem discovery effectiveness coming soon...</p>
           </div>
         );
+      
+      case 'team':
+        return (
+          <div className="glass-card p-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Team Collaboration</h2>
+            <p className="text-gray-600">Collaborative problem discovery features coming soon...</p>
+          </div>
+        );
+      
       case 'settings':
         return (
           <div className="glass-card p-8 text-center">
@@ -96,8 +102,9 @@ function App() {
             <p className="text-gray-600">Platform configuration coming soon...</p>
           </div>
         );
+      
       default:
-        return <Dashboard />;
+        return <Dashboard onStartDiscovery={handleStartDiscovery} />;
     }
   };
 
@@ -112,7 +119,7 @@ function App() {
           <main className="flex-1 p-8 overflow-auto">
             <AnimatePresence mode="wait">
               <motion.div
-                key={`${activeTab}-${discoveryFlow}-${methodologyView}`}
+                key={activeTab}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -138,6 +145,7 @@ function App() {
         }}
       />
 
+      {/* Floating background elements for glassmorphism effect */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div
           animate={{ 
