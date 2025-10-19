@@ -8,9 +8,10 @@ import ProblemDiscoveryPage from './components/ProblemDiscovery/ProblemDiscovery
 import AnalysisPage from './components/ProblemDiscovery/AnalysisPage';
 import OpportunityList from './components/Opportunities/OpportunityList';
 import ResourcesPage from './components/Resources/ResourcesPage';
+import PracticeGuidePage from './components/PracticeGuide/PracticeGuidePage';
 import { ProblemDiscovery } from './types';
 
-type ViewState = 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'analytics' | 'team' | 'resources' | 'settings';
+type ViewState = 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'analytics' | 'resources' | 'practice-guide' | 'settings';
 
 function App() {
   const [activeTab, setActiveTab] = useState<ViewState>('dashboard');
@@ -80,16 +81,11 @@ function App() {
           </div>
         );
       
-      case 'team':
-        return (
-          <div className="glass-card p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Team Collaboration</h2>
-            <p className="text-gray-600">Collaborative problem discovery features coming soon...</p>
-          </div>
-        );
-      
       case 'resources':
         return <ResourcesPage />;
+      
+      case 'practice-guide':
+        return <PracticeGuidePage />;
       
       case 'settings':
         return (
