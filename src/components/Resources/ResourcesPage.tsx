@@ -10,7 +10,8 @@ import {
   Target,
   Award,
   Mail,
-  CheckCircle
+  CheckCircle,
+  Clock
 } from 'lucide-react';
 
 interface ResourceCardProps {
@@ -19,9 +20,47 @@ interface ResourceCardProps {
   url: string;
   icon: React.ReactNode;
   category: string;
+  isComingSoon?: boolean;
 }
 
-const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, url, icon, category }) => {
+const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, url, icon, category, isComingSoon = false }) => {
+  const CardContent = (
+    <div className="flex items-start gap-4">
+      <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+        {icon}
+      </div>
+      <div className="flex-1">
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
+            {title}
+          </h3>
+          {!isComingSoon && <ExternalLink size={16} className="text-gray-400 group-hover:text-primary-500 transition-colors" />}
+          {isComingSoon && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary-100 text-secondary-700 rounded-full text-xs font-medium">
+              <Clock className="w-3 h-3" />
+              Coming Soon
+            </span>
+          )}
+        </div>
+        <p className="text-sm text-gray-600 mb-3">{description}</p>
+        <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
+          {category}
+        </span>
+      </div>
+    </div>
+  );
+
+  if (isComingSoon) {
+    return (
+      <motion.div
+        className="glass-card p-6 opacity-75"
+        whileHover={{ y: -2 }}
+      >
+        {CardContent}
+      </motion.div>
+    );
+  }
+
   return (
     <motion.a
       href={url}
@@ -31,23 +70,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, url, ic
       whileHover={{ y: -4 }}
       whileTap={{ scale: 0.98 }}
     >
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
-          {icon}
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
-              {title}
-            </h3>
-            <ExternalLink size={16} className="text-gray-400 group-hover:text-primary-500 transition-colors" />
-          </div>
-          <p className="text-sm text-gray-600 mb-3">{description}</p>
-          <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
-            {category}
-          </span>
-        </div>
-      </div>
+      {CardContent}
     </motion.a>
   );
 };
@@ -134,9 +157,10 @@ const ResourcesPage: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-800">Singapore Computer Society - Product Management SIG</h3>
             </div>
             <p className="text-gray-700 mb-4">
-              The Product Management Special Interest Group (PM SIG) brings together experienced product managers, 
-              product owners, and business analysts from across Singapore. Learn proven methodologies, share challenges, 
-              and gain insights from practitioners who have successfully navigated complex product discovery and delivery.
+              The Product Management Special Interest Group's core aim is to help uplift product management skills 
+              in Singapore. We bring together experienced product managers, product owners, and business analysts 
+              to share proven methodologies, tackle challenges together, and gain insights from practitioners who 
+              have successfully navigated complex product discovery and delivery.
             </p>
           </div>
         </div>

@@ -8,7 +8,7 @@ import {
   Settings,
   Lightbulb,
   BookOpen,
-  Compass
+  GraduationCap
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -21,9 +21,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'discovery', label: 'Problem Discovery', icon: Search },
     { id: 'opportunities', label: 'Opportunities', icon: Target },
-    { id: 'practice-guide', label: 'Practice Guides', icon: Compass },
-    { id: 'resources', label: 'Resources & Community', icon: BookOpen },
     { id: 'analytics', label: 'Discovery Analytics', icon: BarChart3 },
+    { id: 'practice-guides', label: 'Practice Guides', icon: GraduationCap },
+    { id: 'resources', label: 'Resources & Community', icon: BookOpen },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
