@@ -59,42 +59,78 @@ const Dashboard: React.FC<DashboardProps> = ({ onStartDiscovery }) => {
         </div>
       </div>
 
-      {/* Value Proposition Banner */}
-      <div className="glass-card p-8 bg-gradient-to-r from-primary-50 to-secondary-50">
-        <div className="flex items-center justify-between">
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-800 mb-2">
-              🎯 Systematic Problem Discovery
-            </h3>
-            <p className="text-gray-700 mb-4">
-              Stop building solutions for the wrong problems. Our evidence-based approach helps you identify, validate, and solve real user problems using proven methodologies from product management, behavioral science, and design thinking.
-            </p>
-            <div className="flex items-center gap-6 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-600" />
-                <span>Evidence-based validation</span>
+      {/* Primary CTA Hero Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card p-8 bg-gradient-to-br from-primary-500 to-secondary-500 text-white relative overflow-hidden"
+      >
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full -ml-24 -mb-24" />
+        
+        <div className="relative z-10">
+          <div className="flex items-start justify-between">
+            <div className="flex-1 max-w-2xl">
+              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
+                <Target className="w-4 h-4" />
+                <span className="text-sm font-medium">Evidence-Based Discovery</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-blue-600" />
-                <span>Root cause analysis</span>
+              
+              <h3 className="text-3xl font-bold mb-3">
+                Start Your Problem Discovery Journey
+              </h3>
+              <p className="text-lg text-white/90 mb-6">
+                Stop building solutions for the wrong problems. Use our systematic 5-question framework to identify, validate, and solve real user problems with evidence-based methodologies.
+              </p>
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  <span className="text-sm">Root cause analysis</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  <span className="text-sm">User-centered validation</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5" />
+                  <span className="text-sm">Market insights</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-purple-600" />
-                <span>User-centered approach</span>
+
+              <button
+                onClick={onStartDiscovery}
+                className="inline-flex items-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                Start Problem Discovery
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="hidden lg:block">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 w-64">
+                <h4 className="font-semibold mb-4 text-lg">5 Discovery Questions</h4>
+                <div className="space-y-3">
+                  {[
+                    { step: 1, title: 'What problem?', color: 'bg-amber-400' },
+                    { step: 2, title: 'Who affected?', color: 'bg-blue-400' },
+                    { step: 3, title: 'What evidence?', color: 'bg-purple-400' },
+                    { step: 4, title: 'What impact?', color: 'bg-red-400' },
+                    { step: 5, title: 'What success?', color: 'bg-green-400' }
+                  ].map((item) => (
+                    <div key={item.step} className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-full ${item.color} text-white flex items-center justify-center text-sm font-bold shadow-md`}>
+                        {item.step}
+                      </div>
+                      <span className="text-sm font-medium">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-          <div className="ml-8">
-            <button 
-              onClick={onStartDiscovery}
-              className="glass-button bg-primary-600 text-white px-6 py-3 flex items-center gap-2 hover:bg-primary-700 transition-colors"
-            >
-              Start Problem Discovery
-              <ArrowRight size={16} />
-            </button>
-          </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -170,125 +206,87 @@ const Dashboard: React.FC<DashboardProps> = ({ onStartDiscovery }) => {
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Recent Activity */}
-        <div className="lg:col-span-2">
-          <div className="glass-card p-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-6">Recent Discovery Activity</h3>
-            
-            {recentActivity.length === 0 ? (
-              <div className="text-center py-8">
-                <Lightbulb className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">No recent activity. Start your first problem discovery!</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-start gap-4 p-4 glass-card hover:shadow-md transition-shadow">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      activity.type === 'problem_validated' ? 'bg-green-100' :
-                      activity.type === 'solution_tested' ? 'bg-blue-100' :
-                      'bg-yellow-100'
-                    }`}>
-                      {activity.type === 'problem_validated' ? (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                      ) : activity.type === 'solution_tested' ? (
-                        <Target className="w-5 h-5 text-blue-600" />
-                      ) : (
-                        <Search className="w-5 h-5 text-yellow-600" />
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-medium text-gray-800">{activity.title}</h4>
-                      <p className="text-sm text-gray-600 mb-1">{activity.description}</p>
-                      <div className="flex items-center gap-3 text-xs text-gray-500">
-                        <span>{activity.user}</span>
-                        <span>•</span>
-                        <span>{activity.time}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Discovery Process Guide */}
-        <div>
-          <div className="glass-card p-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">5 Discovery Questions</h3>
+        <div className="glass-card p-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-6">Recent Discovery Activity</h3>
+          
+          {recentActivity.length === 0 ? (
+            <div className="text-center py-8">
+              <Lightbulb className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500">No recent activity. Start your first problem discovery!</p>
+            </div>
+          ) : (
             <div className="space-y-4">
-              {[
-                { step: 1, title: 'What problem?', desc: 'Observable symptoms', color: 'amber' },
-                { step: 2, title: 'Who affected?', desc: 'User segments', color: 'blue' },
-                { step: 3, title: 'What evidence?', desc: 'Data & validation', color: 'purple' },
-                { step: 4, title: 'What impact?', desc: 'Business consequences', color: 'red' },
-                { step: 5, title: 'What success?', desc: 'Measurable outcomes', color: 'green' }
-              ].map((item) => (
-                <div key={item.step} className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-full bg-${item.color}-100 text-${item.color}-600 flex items-center justify-center text-sm font-medium`}>
-                    {item.step}
+              {recentActivity.map((activity) => (
+                <div key={activity.id} className="flex items-start gap-4 p-4 glass-card hover:shadow-md transition-shadow">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    activity.type === 'problem_validated' ? 'bg-green-100' :
+                    activity.type === 'solution_tested' ? 'bg-blue-100' :
+                    'bg-yellow-100'
+                  }`}>
+                    {activity.type === 'problem_validated' ? (
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                    ) : activity.type === 'solution_tested' ? (
+                      <Target className="w-5 h-5 text-blue-600" />
+                    ) : (
+                      <Search className="w-5 h-5 text-yellow-600" />
+                    )}
                   </div>
-                  <div>
-                    <p className="font-medium text-gray-800 text-sm">{item.title}</p>
-                    <p className="text-xs text-gray-600">{item.desc}</p>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-800">{activity.title}</h4>
+                    <p className="text-sm text-gray-600 mb-1">{activity.description}</p>
+                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                      <span>{activity.user}</span>
+                      <span>•</span>
+                      <span>{activity.time}</span>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-            
-            <button 
-              onClick={onStartDiscovery}
-              className="w-full mt-6 glass-button bg-primary-600 text-white py-3 hover:bg-primary-700 transition-colors"
-            >
-              Start Guided Discovery
-            </button>
-          </div>
+          )}
         </div>
-      </div>
 
-      {/* Impact Showcase */}
-      <div className="glass-card p-8">
-        <h3 className="text-xl font-semibold text-gray-800 mb-6">Why Problem-First Discovery Works</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">❌</span>
+        {/* Why Problem-First Discovery Works */}
+        <div className="glass-card p-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-6">Why Problem-First Discovery Works</h3>
+          <div className="space-y-6">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-xl">❌</span>
+                </div>
+                <h4 className="font-semibold text-gray-800">Without Validation</h4>
+              </div>
+              <ul className="text-sm text-gray-600 space-y-1 ml-13">
+                <li>• 70% of features go unused</li>
+                <li>• Solutions don't fit real needs</li>
+                <li>• Wasted development resources</li>
+                <li>• Poor user adoption</li>
+              </ul>
             </div>
-            <h4 className="font-semibold text-gray-800 mb-2">Without Validation</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• 70% of features go unused</li>
-              <li>• Solutions don't fit real needs</li>
-              <li>• Wasted development resources</li>
-              <li>• Poor user adoption</li>
-            </ul>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🔄</span>
+            
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                  <span className="text-xl">✅</span>
+                </div>
+                <h4 className="font-semibold text-gray-800">With Our Process</h4>
+              </div>
+              <ul className="text-sm text-gray-600 space-y-1 ml-13">
+                <li>• 3x higher feature adoption</li>
+                <li>• Faster time to market</li>
+                <li>• Better user satisfaction</li>
+                <li>• Higher ROI on development</li>
+              </ul>
             </div>
-            <h4 className="font-semibold text-gray-800 mb-2">Our Process</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Evidence-based problem identification</li>
-              <li>• User-centered validation</li>
-              <li>• Root cause analysis</li>
-              <li>• Solution hypothesis testing</li>
-            </ul>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">✅</span>
+
+            <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg p-4 mt-4">
+              <p className="text-sm text-gray-700">
+                <strong>Our methodology combines:</strong> Evidence-based problem identification, user-centered validation, root cause analysis, and solution hypothesis testing.
+              </p>
             </div>
-            <h4 className="font-semibold text-gray-800 mb-2">With Validation</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• 3x higher feature adoption</li>
-              <li>• Faster time to market</li>
-              <li>• Better user satisfaction</li>
-              <li>• Higher ROI on development</li>
-            </ul>
           </div>
         </div>
       </div>

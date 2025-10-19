@@ -4,11 +4,11 @@ import {
   LayoutDashboard, 
   Search, 
   Target, 
-  BarChart3, 
-  Settings,
+  BarChart3,
   Lightbulb,
   BookOpen,
-  GraduationCap
+  GraduationCap,
+  Home
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -24,21 +24,30 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'guides', label: 'Practice Guides', icon: GraduationCap },
     { id: 'analytics', label: 'Discovery Analytics', icon: BarChart3 },
     { id: 'resources', label: 'Resources & Community', icon: BookOpen },
-    { id: 'settings', label: 'Settings', icon: Settings },
   ];
+
+  const handleLogoClick = () => {
+    // Navigate to landing page
+    window.location.href = '/';
+  };
 
   return (
     <div className="w-64 bg-white/80 backdrop-blur-lg border-r border-white/20 h-screen sticky top-0">
       <div className="p-6">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+        <motion.div 
+          className="flex items-center gap-3 mb-8 cursor-pointer group"
+          onClick={handleLogoClick}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-shadow">
             <Lightbulb className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800">DiscoveryPro</h1>
+            <h1 className="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors">DiscoveryPro</h1>
             <p className="text-xs text-gray-600">Problem Discovery Platform</p>
           </div>
-        </div>
+        </motion.div>
 
         <nav className="space-y-2">
           {menuItems.map((item) => {
