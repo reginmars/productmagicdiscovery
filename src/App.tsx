@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
+import LandingPage from './components/Landing/LandingPage';
 import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -11,11 +12,15 @@ import PracticeGuidesPage from './components/PracticeGuides/PracticeGuidesPage';
 import ResourcesPage from './components/Resources/ResourcesPage';
 import { ProblemDiscovery } from './types';
 
-type ViewState = 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'guides' | 'analytics' | 'resources' | 'settings';
+type ViewState = 'landing' | 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'guides' | 'analytics' | 'resources';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<ViewState>('dashboard');
+  const [activeTab, setActiveTab] = useState<ViewState>('landing');
   const [currentDiscovery, setCurrentDiscovery] = useState<ProblemDiscovery | null>(null);
+
+  const handleGetStarted = () => {
+    setActiveTab('discovery');
+  };
 
   const handleStartDiscovery = () => {
     setActiveTab('discovery');
@@ -39,6 +44,27 @@ function App() {
   const handleBackFromAnalysis = () => {
     setActiveTab('discovery');
   };
+
+  // Landing page view
+  if (activeTab === 'landing') {
+    return (
+      <>
+        <LandingPage onGetStarted={handleGetStarted} />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: 'rgba(255, 255, 255, 0.9)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '12px',
+              color: '#374151',
+            },
+          }}
+        />
+      </>
+    );
+  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -86,14 +112,6 @@ function App() {
       
       case 'resources':
         return <ResourcesPage />;
-      
-      case 'settings':
-        return (
-          <div className="glass-card p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Settings</h2>
-            <p className="text-gray-600">Platform configuration coming soon...</p>
-          </div>
-        );
       
       default:
         return <Dashboard onStartDiscovery={handleStartDiscovery} />;

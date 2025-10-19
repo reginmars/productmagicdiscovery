@@ -1,15 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  ArrowRight, 
-  CheckCircle,
-  TrendingUp,
-  Users,
-  Lightbulb,
-  BarChart3,
-  Zap,
+  Lightbulb, 
+  Target, 
+  Users, 
+  TrendingUp, 
+  CheckCircle, 
+  ArrowRight,
   Search,
-  Globe
+  BarChart3,
+  Zap
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -17,266 +17,332 @@ interface LandingPageProps {
 }
 
 const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
-  const discoveryBenefits = [
-    {
-      icon: TrendingUp,
-      title: '3x Higher Adoption',
-      description: 'Features built on validated problems see significantly higher user adoption rates'
-    },
-    {
-      icon: Zap,
-      title: 'Faster Time to Market',
-      description: 'Skip building the wrong things and focus on what truly matters to users'
-    },
-    {
-      icon: Users,
-      title: 'Better User Satisfaction',
-      description: 'Solve real problems that users actually care about and will pay for'
-    },
-    {
-      icon: BarChart3,
-      title: 'Higher ROI',
-      description: 'Maximize development resources by building solutions that deliver real value'
-    }
-  ];
-
   return (
-    <div className="space-y-16 pb-16">
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center max-w-4xl mx-auto"
-      >
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 font-inter overflow-hidden">
+      {/* Floating background elements */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div
-          initial={{ scale: 0.9 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-6"
-        >
-          <Lightbulb className="w-4 h-4" />
-          Evidence-Based Product Development
-        </motion.div>
+          animate={{ 
+            x: [0, 100, 0],
+            y: [0, -100, 0],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ 
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-primary-200/20 to-secondary-200/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, -150, 0],
+            y: [0, 100, 0],
+            rotate: [360, 180, 0]
+          }}
+          transition={{ 
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-secondary-200/20 to-primary-200/20 rounded-full blur-3xl"
+        />
+      </div>
 
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-          Build Products That{' '}
-          <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-            Solve Real Problems
-          </span>
-        </h1>
-
-        <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-          A systematic platform for product managers, product owners, and business analysts 
-          to identify, validate, and solve real user problems using evidence-based methodologies 
-          with automated online research.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.button
-            onClick={onGetStarted}
-            className="glass-button bg-primary-600 text-white px-8 py-4 text-lg flex items-center gap-2 hover:bg-primary-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+      {/* Header */}
+      <header className="relative z-10 px-8 py-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
           >
-            Start Problem Discovery
-            <ArrowRight size={20} />
-          </motion.button>
-          
-          <motion.button
-            className="glass-button bg-white text-gray-700 px-8 py-4 text-lg hover:bg-gray-50 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Watch Demo
-          </motion.button>
-        </div>
-
-        <p className="text-sm text-gray-500 mt-6">
-          Start validating problems in minutes with automated research
-        </p>
-      </motion.section>
-
-      {/* Current Focus: Discovery */}
-      <section className="max-w-6xl mx-auto">
-        <div className="glass-card p-8 bg-gradient-to-br from-primary-50 to-secondary-50">
-          <div className="flex items-start gap-6">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Search className="w-8 h-8 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center shadow-lg">
+              <Lightbulb className="w-7 h-7 text-white" />
             </div>
-            
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-800 mb-3">
-                🎯 Problem Discovery Framework
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">DiscoveryPro</h1>
+              <p className="text-xs text-gray-600">Problem Discovery Platform</p>
+            </div>
+          </motion.div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative z-10 px-8 py-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left Column - Main Message */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20">
+                <Target className="w-4 h-4 text-primary-600" />
+                <span className="text-sm font-medium text-gray-700">Evidence-Based Product Discovery</span>
+              </div>
+
+              <h2 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Stop Building
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-600">
+                  The Wrong Things
+                </span>
               </h2>
-              <p className="text-gray-700 mb-6">
-                Stop building solutions for the wrong problems. Our evidence-based discovery framework 
-                helps you systematically identify, validate, and prioritize real user problems using 
-                proven methodologies from product management, behavioral science, and design thinking.
+
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Discover and validate real problems before investing in solutions. Our systematic 5-question framework helps product teams identify opportunities worth solving.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-white/40">
-                  <h4 className="font-semibold text-gray-800 mb-2">5-Question Framework</h4>
-                  <p className="text-sm text-gray-600">
-                    Structured approach to capture problem symptoms, affected users, evidence, 
-                    impact, and success metrics.
-                  </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <motion.button
+                  onClick={onGetStarted}
+                  className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl hover:shadow-2xl transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Start Problem Discovery
+                  <ArrowRight className="w-5 h-5" />
+                </motion.button>
+              </div>
+
+              {/* Key Stats */}
+              <div className="grid grid-cols-3 gap-6">
+                <div>
+                  <div className="text-3xl font-bold text-primary-600 mb-1">3x</div>
+                  <div className="text-sm text-gray-600">Higher Feature Adoption</div>
                 </div>
-                
-                <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-white/40">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Globe className="w-4 h-4 text-primary-600" />
-                    <h4 className="font-semibold text-gray-800">Automated Online Research</h4>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    AI-powered research that gathers validation data from online sources based on 
-                    your 5 question responses, including market insights and trend analysis.
-                  </p>
+                <div>
+                  <div className="text-3xl font-bold text-secondary-600 mb-1">70%</div>
+                  <div className="text-sm text-gray-600">Faster Validation</div>
                 </div>
-                
-                <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-white/40">
-                  <h4 className="font-semibold text-gray-800 mb-2">Intelligent Analysis</h4>
-                  <p className="text-sm text-gray-600">
-                    Root cause analysis, confidence scoring, and evidence-based insights 
-                    generated from your responses and research data.
-                  </p>
+                <div>
+                  <div className="text-3xl font-bold text-purple-600 mb-1">5</div>
+                  <div className="text-sm text-gray-600">Critical Questions</div>
                 </div>
-                
-                <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-white/40">
-                  <h4 className="font-semibold text-gray-800 mb-2">HMW Statement Generation</h4>
-                  <p className="text-sm text-gray-600">
-                    Transform validated problems into actionable "How Might We" statements 
-                    with clear rationale and opportunity tracking.
-                  </p>
+              </div>
+            </motion.div>
+
+            {/* Right Column - 5 Questions Preview */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative"
+            >
+              <div className="glass-card p-8 shadow-2xl">
+                <h3 className="text-2xl font-bold text-gray-800 mb-6">The 5 Discovery Questions</h3>
+                <div className="space-y-4">
+                  {[
+                    { step: 1, title: 'What problem are we solving?', color: 'bg-amber-500', icon: Search },
+                    { step: 2, title: 'Who is affected by this problem?', color: 'bg-blue-500', icon: Users },
+                    { step: 3, title: 'What evidence do we have?', color: 'bg-purple-500', icon: BarChart3 },
+                    { step: 4, title: 'What is the impact?', color: 'bg-red-500', icon: TrendingUp },
+                    { step: 5, title: 'How will we measure success?', color: 'bg-green-500', icon: CheckCircle }
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <motion.div
+                        key={item.step}
+                        className="flex items-center gap-4 p-4 bg-white/50 rounded-lg hover:bg-white/70 transition-all"
+                        whileHover={{ x: 8 }}
+                      >
+                        <div className={`w-12 h-12 rounded-full ${item.color} text-white flex items-center justify-center text-lg font-bold shadow-lg flex-shrink-0`}>
+                          {item.step}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-semibold text-gray-800">{item.title}</p>
+                        </div>
+                        <Icon className="w-5 h-5 text-gray-400" />
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
 
-              <button
-                onClick={onGetStarted}
-                className="glass-button bg-primary-600 text-white px-6 py-3 flex items-center gap-2 hover:bg-primary-700 transition-colors"
-              >
-                Start Your First Discovery
-                <ArrowRight size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Problem-First Discovery Works */}
-      <section className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Why Evidence-Based Discovery Matters
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Building the right thing is more important than building things right. 
-            Here's the impact of starting with validated problems.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {discoveryBenefits.map((benefit, index) => {
-            const Icon = benefit.icon;
-            return (
+              {/* Floating badge */}
               <motion.div
-                key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="glass-card p-6"
+                className="absolute -top-4 -right-4 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-full shadow-xl"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">{benefit.title}</h3>
-                    <p className="text-gray-600">{benefit.description}</p>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-5 h-5" />
+                  <span className="font-semibold">AI-Powered Analysis</span>
                 </div>
               </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* The Problem with Solution-First Thinking */}
-      <section className="max-w-6xl mx-auto">
-        <div className="glass-card p-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">❌</span>
-              </div>
-              <h4 className="font-semibold text-gray-800 mb-2">Without Validation</h4>
-              <ul className="text-sm text-gray-600 space-y-2">
-                <li>• 70% of features go unused</li>
-                <li>• Solutions don't fit real needs</li>
-                <li>• Wasted development resources</li>
-                <li>• Poor user adoption rates</li>
-                <li>• Low ROI on product investments</li>
-              </ul>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🔄</span>
-              </div>
-              <h4 className="font-semibold text-gray-800 mb-2">Our Process</h4>
-              <ul className="text-sm text-gray-600 space-y-2">
-                <li>• Evidence-based problem identification</li>
-                <li>• Automated online research & validation</li>
-                <li>• Root cause analysis</li>
-                <li>• Market research integration</li>
-                <li>• Systematic opportunity prioritization</li>
-              </ul>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">✅</span>
-              </div>
-              <h4 className="font-semibold text-gray-800 mb-2">With Validation</h4>
-              <ul className="text-sm text-gray-600 space-y-2">
-                <li>• 3x higher feature adoption</li>
-                <li>• Faster time to market</li>
-                <li>• Better user satisfaction</li>
-                <li>• Higher ROI on development</li>
-                <li>• Confident product decisions</li>
-              </ul>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="max-w-4xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="glass-card p-12 bg-gradient-to-br from-primary-50 to-secondary-50"
-        >
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Ready to Build the Right Things?
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Start with systematic problem discovery and build products users actually need.
-          </p>
-          
-          <button
-            onClick={onGetStarted}
-            className="glass-button bg-primary-600 text-white px-8 py-4 text-lg flex items-center gap-2 hover:bg-primary-700 transition-colors mx-auto"
+      {/* Benefits Section */}
+      <section className="relative z-10 px-8 py-20 bg-white/30 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            Begin Problem Discovery
-            <ArrowRight size={20} />
-          </button>
+            <h3 className="text-4xl font-bold text-gray-900 mb-4">Why Problem-First Discovery Works</h3>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Stop wasting resources on solutions nobody needs. Validate problems first, build solutions second.
+            </p>
+          </motion.div>
 
-          <p className="text-sm text-gray-500 mt-6">
-            Join product teams using evidence-based discovery to build better products
-          </p>
-        </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {/* Without Validation */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-8"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center">
+                  <span className="text-3xl">❌</span>
+                </div>
+                <h4 className="text-2xl font-bold text-gray-800">Without Validation</h4>
+              </div>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>70% of features go unused</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Solutions don't fit real needs</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Wasted development resources</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Poor user adoption and satisfaction</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">•</span>
+                  <span>Longer time to market with wrong features</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* With Our Process */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-8 border-2 border-green-200"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
+                  <span className="text-3xl">✅</span>
+                </div>
+                <h4 className="text-2xl font-bold text-gray-800">With Our Process</h4>
+              </div>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                  <span>3x higher feature adoption rates</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Faster time to market with right features</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Better user satisfaction and retention</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Higher ROI on development investment</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Evidence-based decision making</span>
+                </li>
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Methodology */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass-card p-8 bg-gradient-to-r from-primary-50 to-secondary-50"
+          >
+            <h4 className="text-2xl font-bold text-gray-800 mb-6 text-center">Our Evidence-Based Methodology</h4>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-primary-600" />
+                </div>
+                <h5 className="font-semibold text-gray-800 mb-2">Problem Identification</h5>
+                <p className="text-sm text-gray-600">Systematic discovery of real user problems</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-blue-600" />
+                </div>
+                <h5 className="font-semibold text-gray-800 mb-2">User Validation</h5>
+                <p className="text-sm text-gray-600">Direct feedback from affected users</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="w-8 h-8 text-purple-600" />
+                </div>
+                <h5 className="font-semibold text-gray-800 mb-2">Root Cause Analysis</h5>
+                <p className="text-sm text-gray-600">Deep dive into underlying issues</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-8 h-8 text-green-600" />
+                </div>
+                <h5 className="font-semibold text-gray-800 mb-2">Solution Hypothesis</h5>
+                <p className="text-sm text-gray-600">Test-driven approach to building</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
+
+      {/* Final CTA */}
+      <section className="relative z-10 px-8 py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass-card p-12 bg-gradient-to-br from-primary-500 to-secondary-500 text-white"
+          >
+            <h3 className="text-4xl font-bold mb-4">Ready to Discover Real Problems?</h3>
+            <p className="text-xl mb-8 text-white/90">
+              Join product teams who validate before they build. Start your evidence-based discovery journey today.
+            </p>
+            <motion.button
+              onClick={onGetStarted}
+              className="inline-flex items-center gap-3 bg-white text-primary-600 px-10 py-5 rounded-lg font-bold text-xl shadow-2xl hover:shadow-3xl transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Start Your First Discovery
+              <ArrowRight className="w-6 h-6" />
+            </motion.button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative z-10 px-8 py-8 border-t border-gray-200/50 bg-white/30 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto text-center text-gray-600">
+          <p className="text-sm">
+            © 2024 DiscoveryPro. Evidence-based product discovery for modern teams.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

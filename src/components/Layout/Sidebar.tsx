@@ -7,8 +7,7 @@ import {
   BarChart3,
   Lightbulb,
   BookOpen,
-  GraduationCap,
-  Home
+  GraduationCap
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -27,8 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
   ];
 
   const handleLogoClick = () => {
-    // Navigate to landing page
-    window.location.href = '/';
+    onTabChange('landing');
   };
 
   return (
