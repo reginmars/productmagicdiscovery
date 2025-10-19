@@ -346,10 +346,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               Start Your Problem Discovery
               <ArrowRight className="w-5 h-5" />
             </motion.button>
-
-            <p className="text-sm text-gray-400 mt-6">
-              Free to start • Cancel anytime
-            </p>
           </motion.div>
         </div>
       </div>
