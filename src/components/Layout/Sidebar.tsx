@@ -4,11 +4,11 @@ import {
   LayoutDashboard, 
   Search, 
   Target, 
-  BookOpen, 
   BarChart3, 
   Users, 
   Settings,
-  Lightbulb
+  Lightbulb,
+  BookOpen
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -21,9 +21,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'discovery', label: 'Problem Discovery', icon: Search },
     { id: 'opportunities', label: 'Opportunities', icon: Target },
-    { id: 'frameworks', label: 'Methodology Library', icon: BookOpen },
     { id: 'analytics', label: 'Discovery Analytics', icon: BarChart3 },
     { id: 'team', label: 'Team Collaboration', icon: Users },
+    { id: 'resources', label: 'Resources & Community', icon: BookOpen },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
         <div className="glass-card p-4">
           <h3 className="font-semibold text-gray-800 mb-2">💡 Pro Tip</h3>
           <p className="text-xs text-gray-600">
-            Check out the Methodology Library for proven discovery frameworks from IDEO, Google, and more!
+            Always validate problems with real user data before jumping to solutions.
           </p>
         </div>
       </div>

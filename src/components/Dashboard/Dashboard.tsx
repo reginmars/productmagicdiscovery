@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, Target, CheckCircle, TrendingUp, Users, Lightbulb } from 'lucide-react';
+import { Search, Target, CheckCircle, TrendingUp, Users, Lightbulb, ArrowRight } from 'lucide-react';
 import { useStore } from '../../store/useStore';
 
 interface DashboardProps {
@@ -83,6 +83,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onStartDiscovery }) => {
                 <span>User-centered approach</span>
               </div>
             </div>
+          </div>
+          <div className="ml-8">
+            <button 
+              onClick={onStartDiscovery}
+              className="glass-button bg-primary-600 text-white px-6 py-3 flex items-center gap-2 hover:bg-primary-700 transition-colors"
+            >
+              Start Problem Discovery
+              <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </div>
@@ -228,6 +237,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onStartDiscovery }) => {
                 </div>
               ))}
             </div>
+            
+            <button 
+              onClick={onStartDiscovery}
+              className="w-full mt-6 glass-button bg-primary-600 text-white py-3 hover:bg-primary-700 transition-colors"
+            >
+              Start Guided Discovery
+            </button>
           </div>
         </div>
       </div>
