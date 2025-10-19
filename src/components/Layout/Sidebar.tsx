@@ -7,7 +7,8 @@ import {
   BarChart3,
   Lightbulb,
   BookOpen,
-  GraduationCap
+  GraduationCap,
+  Sparkles
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -21,12 +22,13 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     { id: 'discovery', label: 'Problem Discovery', icon: Search },
     { id: 'opportunities', label: 'Opportunities', icon: Target },
     { id: 'guides', label: 'Practice Guides', icon: GraduationCap },
-    { id: 'analytics', label: 'Discovery Analytics', icon: BarChart3 },
     { id: 'resources', label: 'Resources & Community', icon: BookOpen },
+    { id: 'analytics', label: 'Discovery Analytics', icon: BarChart3 },
   ];
 
   const handleLogoClick = () => {
-    onTabChange('landing');
+    // Navigate to landing page
+    window.location.href = '/';
   };
 
   return (
@@ -39,11 +41,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
           whileTap={{ scale: 0.98 }}
         >
           <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-shadow">
-            <Lightbulb className="w-6 h-6 text-white" />
+            <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors">ProductMagic</h1>
-            <p className="text-xs text-gray-600">Problem Discovery Platform</p>
+            <h1 className="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors">Product Magic</h1>
           </div>
         </motion.div>
 
