@@ -61,7 +61,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               <Lightbulb className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">DiscoveryPro</h1>
+              <h1 className="text-2xl font-bold text-gray-800">ProductMagic</h1>
               <p className="text-xs text-gray-600">Problem Discovery Platform</p>
             </div>
           </motion.div>
@@ -229,7 +229,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               </ul>
             </motion.div>
 
-            {/* With Our Process */}
+            {/* With Discovery */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -240,7 +240,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
                   <span className="text-3xl">✅</span>
                 </div>
-                <h4 className="text-2xl font-bold text-gray-800">With Our Process</h4>
+                <h4 className="text-2xl font-bold text-gray-800">With Discovery</h4>
               </div>
               <ul className="space-y-3 text-gray-600">
                 <li className="flex items-start gap-3">
@@ -339,7 +339,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       <footer className="relative z-10 px-8 py-8 border-t border-gray-200/50 bg-white/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto text-center text-gray-600">
           <p className="text-sm">
-            © 2024 DiscoveryPro. Evidence-based product discovery for modern teams.
+            © 2024 ProductMagic. Evidence-based product discovery for modern teams.
           </p>
         </div>
       </footer>

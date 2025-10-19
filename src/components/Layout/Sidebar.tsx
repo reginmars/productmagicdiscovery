@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
             <Lightbulb className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors">DiscoveryPro</h1>
+            <h1 className="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors">ProductMagic</h1>
             <p className="text-xs text-gray-600">Problem Discovery Platform</p>
           </div>
         </motion.div>
