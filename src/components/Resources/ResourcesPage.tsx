@@ -9,10 +9,7 @@ import {
   Target,
   Award,
   Mail,
-  CheckCircle,
-  Compass,
-  TrendingUp,
-  Users as UsersIcon
+  CheckCircle
 } from 'lucide-react';
 
 interface ResourceCardProps {
@@ -110,37 +107,6 @@ const ResourcesPage: React.FC = () => {
             url="https://www.designsystem.tech.gov.sg/"
             icon={<Lightbulb className="w-6 h-6 text-white" />}
             category="Government"
-          />
-        </div>
-      </section>
-
-      {/* Actionable Visioning Guide Section */}
-      <section>
-        <div className="flex items-center gap-3 mb-4">
-          <Compass className="w-6 h-6 text-primary-600" />
-          <h2 className="text-2xl font-bold text-gray-800">Actionable Visioning Guide</h2>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <ResourceCard
-            title="Define Your North Star"
-            description="Establish a clear, measurable vision that aligns stakeholders and guides decision-making throughout the discovery process."
-            url="https://www.scs.org.sg/special-interest-groups/product-management/resources"
-            icon={<Compass className="w-6 h-6 text-white" />}
-            category="Vision"
-          />
-          <ResourceCard
-            title="Set Success Metrics"
-            description="Identify key performance indicators that validate whether discovered problems are worth solving and track progress."
-            url="https://www.scs.org.sg/special-interest-groups/product-management/resources"
-            icon={<TrendingUp className="w-6 h-6 text-white" />}
-            category="Metrics"
-          />
-          <ResourceCard
-            title="Align Stakeholders"
-            description="Build consensus around problem priorities and ensure everyone understands the strategic direction and expected outcomes."
-            url="https://www.scs.org.sg/special-interest-groups/product-management/resources"
-            icon={<UsersIcon className="w-6 h-6 text-white" />}
-            category="Alignment"
           />
         </div>
       </section>
