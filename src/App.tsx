@@ -19,7 +19,8 @@ function App() {
   const [currentDiscovery, setCurrentDiscovery] = useState<ProblemDiscovery | null>(null);
 
   const handleGetStarted = () => {
-    setActiveTab('dashboard');
+    // Navigate directly to discovery questions page
+    setActiveTab('discovery');
   };
 
   const handleStartDiscovery = () => {
