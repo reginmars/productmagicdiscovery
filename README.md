@@ -1,106 +1,140 @@
 # Product Discovery Platform
 
-Enterprise-grade platform for systematic problem discovery and validation using AI-powered market research.
+Enterprise-grade platform for systematic problem discovery and opportunity management.
 
 ## Features
 
-- **Problem Discovery**: Structured 5-question framework to identify real problems
-- **AI-Powered Analysis**: Real-time web crawling and market research using GPT-4 and Tavily AI
-- **Market Validation**: Automated gathering of market data, competitor insights, and industry benchmarks
-- **Evidence-Based Insights**: Data-driven recommendations with confidence scoring
+- **AI-Powered Analysis**: Claude AI analyzes problems and validates with market research
+- **Problem Discovery**: Structured 5-question framework
+- **Market Validation**: Automated research and competitor analysis
+- **HMW Generation**: AI-generated "How Might We" opportunity statements
+- **Practice Guides**: SCS PM SIG educational resources
 
 ## Setup
 
-### Frontend
+### Prerequisites
 
-1. Install dependencies:
+- Node.js 18+
+- Anthropic API key (Claude AI)
+
+### Installation
+
 ```bash
 npm install
 ```
 
-2. Create `.env` file:
-```bash
-cp .env.example .env
+### Environment Variables
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:3001
+ANTHROPIC_API_KEY=your_claude_api_key_here
+PORT=3001
 ```
 
-3. Start development server:
-```bash
-npm run dev
-```
+Get your Anthropic API key from: https://console.anthropic.com/
 
-### Backend
+### Running the Application
 
-1. Navigate to server directory:
-```bash
-cd server
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Create `.env` file with your API keys:
-```bash
-cp .env.example .env
-```
-
-Required API keys:
-- `OPENAI_API_KEY`: Get from https://platform.openai.com/api-keys
-- `TAVILY_API_KEY`: Get from https://tavily.com
-
-4. Start backend server:
+**Terminal 1 - Frontend:**
 ```bash
 npm run dev
 ```
 
-The backend will run on `http://localhost:3001`
+**Terminal 2 - Backend:**
+```bash
+npm run server
+```
+
+The frontend runs on `http://localhost:5173`
+The backend API runs on `http://localhost:3001`
 
 ## API Endpoints
 
-- `POST /api/analysis/analyze` - Analyze a problem discovery
-- `GET /api/analysis/health` - Health check
-- `GET /api/health` - Server health check
+### POST /api/analysis/analyze
+Analyzes problem discovery and performs market research.
 
-## Tech Stack
+**Request:**
+```json
+{
+  "discovery": {
+    "id": "string",
+    "problemDescription": "string",
+    "affectedUsers": "string",
+    "evidence": "string",
+    "businessImpact": "string",
+    "successCriteria": "string"
+  }
+}
+```
 
-**Frontend:**
-- React + TypeScript
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Zustand
+**Response:**
+```json
+{
+  "success": true,
+  "analysis": {
+    "rootCauses": ["..."],
+    "userPainPoints": ["..."],
+    "marketValidation": {...},
+    "competitorInsights": ["..."],
+    "keyFindings": ["..."],
+    "recommendedFocus": "...",
+    "confidenceScore": 87
+  }
+}
+```
 
-**Backend:**
-- Node.js + Express
-- TypeScript
-- OpenAI GPT-4
-- Tavily AI (Web Research)
-- Zod (Validation)
+### POST /api/analysis/hmw
+Generates "How Might We" opportunity statements.
+
+**Request:**
+```json
+{
+  "discovery": {...},
+  "analysis": {...}
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "hmwStatements": [
+    {
+      "statement": "How might we...",
+      "rationale": "...",
+      "targetOutcome": "...",
+      "potentialSolutions": ["..."],
+      "priority": "high",
+      "feasibility": 8,
+      "impact": 9
+    }
+  ]
+}
+```
+
+## Architecture
+
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Express.js + Node.js
+- **AI**: Anthropic Claude 3.5 Sonnet
+- **State**: Zustand
+- **Styling**: Tailwind CSS + Glassmorphism
+
+## Rate Limiting
+
+API endpoints are rate-limited to 10 requests per 15 minutes per IP address.
 
 ## Development
 
-Run both frontend and backend concurrently:
-
 ```bash
-# Terminal 1 - Frontend
-npm run dev
+# Run linter
+npm run lint
 
-# Terminal 2 - Backend
-cd server && npm run dev
-```
+# Build for production
+npm run build
 
-## Environment Variables
-
-### Frontend (.env)
-```
-VITE_API_URL=http://localhost:3001/api
-```
-
-### Backend (server/.env)
-```
-OPENAI_API_KEY=your_openai_api_key
-TAVILY_API_KEY=your_tavily_api_key
-PORT=3001
-NODE_ENV=development
+# Preview production build
+npm run preview
 ```

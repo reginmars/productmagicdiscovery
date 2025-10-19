@@ -1,22 +1,23 @@
-import { ProblemDiscovery, ProblemAnalysis } from '../types';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+export interface AnalysisResponse {
+  success: boolean;
+  analysis: any;
+}
 
-export class ApiService {
-  static async analyzeDiscovery(discovery: ProblemDiscovery): Promise<ProblemAnalysis> {
-    const response = await fetch(`${API_BASE_URL}/analysis/analyze`, {
+export interface HMWResponse {
+  success: boolean;
+  hmwStatements: any[];
+}
+
+export async function analyzeDiscovery(discovery: any): Promise<AnalysisResponse> {
+  try {
+    const response = await fetch(`${API_URL}/api/analysis/analyze`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        discoveryId: discovery.id,
-        problemDescription: discovery.problemDescription,
-        affectedUsers: discovery.affectedUsers,
-        evidence: discovery.evidence,
-        businessImpact: discovery.businessImpact,
-        successCriteria: discovery.successCriteria,
-      }),
+      body: JSON.stringify({ discovery }),
     });
 
     if (!response.ok) {
@@ -24,16 +25,31 @@ export class ApiService {
       throw new Error(error.message || 'Failed to analyze discovery');
     }
 
-    const result = await response.json();
-    return result.data;
+    return await response.json();
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
   }
+}
 
-  static async checkHealth(): Promise<boolean> {
-    try {
-      const response = await fetch(`${API_BASE_URL}/health`);
-      return response.ok;
-    } catch {
-      return false;
+export async function generateHMWStatements(discovery: any, analysis: any): Promise<HMWResponse> {
+  try {
+    const response = await fetch(`${API_URL}/api/analysis/hmw`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ discovery, analysis }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to generate HMW statements');
     }
+
+    return await response.json();
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
   }
 }
