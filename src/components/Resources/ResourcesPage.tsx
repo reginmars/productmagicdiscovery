@@ -164,13 +164,12 @@ const ResourcesPage: React.FC = () => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
-                  SCS Product Management SIG Events
+                  Workshops, Panels & Networking Sessions
                 </h3>
                 <ExternalLink size={16} className="text-gray-400 group-hover:text-primary-500 transition-colors" />
               </div>
               <p className="text-sm text-gray-600 mb-3">
-                Join workshops, panel discussions, and networking sessions with Singapore's product management community. 
-                Learn from experienced practitioners and stay updated on the latest trends and methodologies.
+                Learn from seasoned practitioners, share insights, and discover battle-tested approaches. Experience hands-on workshops, expert panels, and meaningful connections that keep you at the forefront of product management.
               </p>
               <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
                 Events & Workshops
@@ -187,58 +186,73 @@ const ResourcesPage: React.FC = () => {
           <h2 className="text-2xl font-bold text-gray-800">Community</h2>
         </div>
         
-        <div className="glass-card p-8 bg-gradient-to-br from-secondary-50 to-primary-50 border-2 border-secondary-200">
-          <div className="text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium mb-4">
-              <Users className="w-4 h-4" />
-              Coming Soon
+        <motion.div
+          className="glass-card p-6 hover:shadow-lg transition-all block"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Users className="w-6 h-6 text-white" />
             </div>
-            
-            <h3 className="text-2xl font-bold text-gray-800 mb-3">
-              SCS Product Management (PDM) Special Interest Group Community
-            </h3>
-            <p className="text-gray-600 mb-6">
-              We're building a dedicated online community platform for SCS PDM members. Connect, collaborate, 
-              and share insights with fellow product managers, product owners, and business analysts. 
-              Be the first to know when we launch and get exclusive early access.
-            </p>
-
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <div className="flex-1">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  />
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-xs font-medium">
+                  <Users className="w-3 h-3" />
+                  Coming Soon
                 </div>
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all font-medium whitespace-nowrap inline-flex items-center justify-center gap-2"
-                >
-                  <Mail className="w-4 h-4" />
-                  Notify Me
-                </button>
-              </form>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center justify-center gap-2 text-green-600 font-medium"
-              >
-                <CheckCircle className="w-5 h-5" />
-                Thanks! We'll notify you when we launch.
-              </motion.div>
-            )}
+              </div>
+              
+              <h3 className="font-semibold text-gray-800 mb-2">
+                Help Us Build Something Great
+              </h3>
+              
+              <p className="text-sm text-gray-600 mb-2">
+                We're exploring an online community platform for SCS PDM members—a space to connect, collaborate, and share insights with fellow product managers, product owners, and business analysts.
+              </p>
 
-            <p className="text-xs text-gray-500 mt-4">
-              We respect your privacy. Unsubscribe at any time.
-            </p>
+              <p className="text-sm text-gray-600 mb-4">
+                <strong>Interested?</strong> Register your interest now to help us shape this community and be among the first to join when we launch.
+              </p>
+
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex-1">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-all font-medium whitespace-nowrap inline-flex items-center justify-center gap-2 text-sm"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Notify Me
+                  </button>
+                </form>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center gap-2 text-green-600 font-medium text-sm"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  Thanks! We'll notify you when we launch.
+                </motion.div>
+              )}
+
+              <p className="text-xs text-gray-500 mt-3">
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Info Card */}
