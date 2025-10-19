@@ -3,24 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
-import LandingPage from './components/Landing/LandingPage';
 import Dashboard from './components/Dashboard/Dashboard';
 import ProblemDiscoveryPage from './components/ProblemDiscovery/ProblemDiscoveryPage';
 import AnalysisPage from './components/ProblemDiscovery/AnalysisPage';
 import OpportunityList from './components/Opportunities/OpportunityList';
+import PracticeGuidesPage from './components/PracticeGuides/PracticeGuidesPage';
 import ResourcesPage from './components/Resources/ResourcesPage';
-import PracticeGuidePage from './components/PracticeGuide/PracticeGuidePage';
 import { ProblemDiscovery } from './types';
 
-type ViewState = 'landing' | 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'analytics' | 'practice-guides' | 'resources' | 'settings';
+type ViewState = 'dashboard' | 'discovery' | 'analysis' | 'hmw' | 'opportunities' | 'guides' | 'analytics' | 'resources' | 'settings';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<ViewState>('landing');
+  const [activeTab, setActiveTab] = useState<ViewState>('dashboard');
   const [currentDiscovery, setCurrentDiscovery] = useState<ProblemDiscovery | null>(null);
-
-  const handleGetStarted = () => {
-    setActiveTab('dashboard');
-  };
 
   const handleStartDiscovery = () => {
     setActiveTab('discovery');
@@ -47,9 +42,6 @@ function App() {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'landing':
-        return <LandingPage onGetStarted={handleGetStarted} />;
-      
       case 'dashboard':
         return <Dashboard onStartDiscovery={handleStartDiscovery} />;
       
@@ -81,6 +73,9 @@ function App() {
       case 'opportunities':
         return <OpportunityList />;
       
+      case 'guides':
+        return <PracticeGuidesPage />;
+      
       case 'analytics':
         return (
           <div className="glass-card p-8 text-center">
@@ -88,9 +83,6 @@ function App() {
             <p className="text-gray-600">Insights into your problem discovery effectiveness coming soon...</p>
           </div>
         );
-      
-      case 'practice-guides':
-        return <PracticeGuidePage />;
       
       case 'resources':
         return <ResourcesPage />;
@@ -104,21 +96,19 @@ function App() {
         );
       
       default:
-        return <LandingPage onGetStarted={handleGetStarted} />;
+        return <Dashboard onStartDiscovery={handleStartDiscovery} />;
     }
   };
-
-  const showSidebar = activeTab !== 'landing';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 font-inter">
       <div className="flex">
-        {showSidebar && <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />}
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
         
         <div className="flex-1 flex flex-col">
-          {showSidebar && <Header />}
+          <Header />
           
-          <main className={`flex-1 overflow-auto ${showSidebar ? 'p-8' : 'p-0'}`}>
+          <main className="flex-1 p-8 overflow-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}

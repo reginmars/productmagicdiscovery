@@ -5,13 +5,14 @@ import {
   BookOpen, 
   Users, 
   Calendar,
-  FileText,
   Lightbulb,
   Target,
   Award,
   Mail,
   CheckCircle,
-  Clock
+  Compass,
+  TrendingUp,
+  Users as UsersIcon
 } from 'lucide-react';
 
 interface ResourceCardProps {
@@ -20,47 +21,9 @@ interface ResourceCardProps {
   url: string;
   icon: React.ReactNode;
   category: string;
-  isComingSoon?: boolean;
 }
 
-const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, url, icon, category, isComingSoon = false }) => {
-  const CardContent = (
-    <div className="flex items-start gap-4">
-      <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
-        {icon}
-      </div>
-      <div className="flex-1">
-        <div className="flex items-center gap-2 mb-2">
-          <h3 className="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
-            {title}
-          </h3>
-          {!isComingSoon && <ExternalLink size={16} className="text-gray-400 group-hover:text-primary-500 transition-colors" />}
-          {isComingSoon && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-secondary-100 text-secondary-700 rounded-full text-xs font-medium">
-              <Clock className="w-3 h-3" />
-              Coming Soon
-            </span>
-          )}
-        </div>
-        <p className="text-sm text-gray-600 mb-3">{description}</p>
-        <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
-          {category}
-        </span>
-      </div>
-    </div>
-  );
-
-  if (isComingSoon) {
-    return (
-      <motion.div
-        className="glass-card p-6 opacity-75"
-        whileHover={{ y: -2 }}
-      >
-        {CardContent}
-      </motion.div>
-    );
-  }
-
+const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, url, icon, category }) => {
   return (
     <motion.a
       href={url}
@@ -70,7 +33,23 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ title, description, url, ic
       whileHover={{ y: -4 }}
       whileTap={{ scale: 0.98 }}
     >
-      {CardContent}
+      <div className="flex items-start gap-4">
+        <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+          {icon}
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="font-semibold text-gray-800 group-hover:text-primary-600 transition-colors">
+              {title}
+            </h3>
+            <ExternalLink size={16} className="text-gray-400 group-hover:text-primary-500 transition-colors" />
+          </div>
+          <p className="text-sm text-gray-600 mb-3">{description}</p>
+          <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
+            {category}
+          </span>
+        </div>
+      </div>
     </motion.a>
   );
 };
@@ -129,8 +108,39 @@ const ResourcesPage: React.FC = () => {
             title="Singapore Government Design System"
             description="Design principles and resources for building government digital services."
             url="https://www.designsystem.tech.gov.sg/"
-            icon={<FileText className="w-6 h-6 text-white" />}
+            icon={<Lightbulb className="w-6 h-6 text-white" />}
             category="Government"
+          />
+        </div>
+      </section>
+
+      {/* Actionable Visioning Guide Section */}
+      <section>
+        <div className="flex items-center gap-3 mb-4">
+          <Compass className="w-6 h-6 text-primary-600" />
+          <h2 className="text-2xl font-bold text-gray-800">Actionable Visioning Guide</h2>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <ResourceCard
+            title="Define Your North Star"
+            description="Establish a clear, measurable vision that aligns stakeholders and guides decision-making throughout the discovery process."
+            url="https://www.scs.org.sg/special-interest-groups/product-management/resources"
+            icon={<Compass className="w-6 h-6 text-white" />}
+            category="Vision"
+          />
+          <ResourceCard
+            title="Set Success Metrics"
+            description="Identify key performance indicators that validate whether discovered problems are worth solving and track progress."
+            url="https://www.scs.org.sg/special-interest-groups/product-management/resources"
+            icon={<TrendingUp className="w-6 h-6 text-white" />}
+            category="Metrics"
+          />
+          <ResourceCard
+            title="Align Stakeholders"
+            description="Build consensus around problem priorities and ensure everyone understands the strategic direction and expected outcomes."
+            url="https://www.scs.org.sg/special-interest-groups/product-management/resources"
+            icon={<UsersIcon className="w-6 h-6 text-white" />}
+            category="Alignment"
           />
         </div>
       </section>
@@ -157,10 +167,9 @@ const ResourcesPage: React.FC = () => {
               <h3 className="text-xl font-semibold text-gray-800">Singapore Computer Society - Product Management SIG</h3>
             </div>
             <p className="text-gray-700 mb-4">
-              The Product Management Special Interest Group's core aim is to help uplift product management skills 
-              in Singapore. We bring together experienced product managers, product owners, and business analysts 
-              to share proven methodologies, tackle challenges together, and gain insights from practitioners who 
-              have successfully navigated complex product discovery and delivery.
+              The Product Management Special Interest Group (PM SIG) brings together experienced product managers, 
+              product owners, and business analysts from across Singapore. Learn proven methodologies, share challenges, 
+              and gain insights from practitioners who have successfully navigated complex product discovery and delivery.
             </p>
           </div>
         </div>

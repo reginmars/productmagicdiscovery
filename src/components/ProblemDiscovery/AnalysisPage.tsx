@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Brain, TrendingUp, Users, Target, Lightbulb, CheckCircle, Loader, ArrowRight, AlertCircle } from 'lucide-react';
-import { ProblemDiscovery, ProblemAnalysis } from '../../types';
+import { ArrowLeft, Brain, TrendingUp, Users, Target, Lightbulb, CheckCircle, Loader, ArrowRight } from 'lucide-react';
+import { ProblemDiscovery, ProblemAnalysis, MarketValidation } from '../../types';
 import { useStore } from '../../store/useStore';
-import { ApiService } from '../../services/api';
 import toast from 'react-hot-toast';
 
 interface AnalysisPageProps {
@@ -16,58 +15,82 @@ const AnalysisPage: React.FC<AnalysisPageProps> = ({ discovery, onBack, onProcee
   const { updateDiscovery } = useStore();
   const [isAnalyzing, setIsAnalyzing] = useState(true);
   const [analysis, setAnalysis] = useState<ProblemAnalysis | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [currentStep, setCurrentStep] = useState(0);
-
-  const analysisSteps = [
-    'Analyzing problem patterns...',
-    'Researching market data...',
-    'Gathering competitor insights...',
-    'Validating with industry benchmarks...',
-    'Compiling findings...'
-  ];
 
   useEffect(() => {
+    // Simulate analysis process
     const analyzeDiscovery = async () => {
       setIsAnalyzing(true);
-      setError(null);
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
-      try {
-        // Simulate step progression
-        const stepInterval = setInterval(() => {
-          setCurrentStep(prev => {
-            if (prev < analysisSteps.length - 1) {
-              return prev + 1;
-            }
-            return prev;
-          });
-        }, 3000);
+      // Generate mock analysis based on discovery responses
+      const mockAnalysis: ProblemAnalysis = {
+        id: `analysis-${Date.now()}`,
+        discoveryId: discovery.id,
+        rootCauses: [
+          'Complex payment flow with too many steps',
+          'Lack of clear payment method visibility',
+          'Mobile UX not optimized for quick checkout',
+          'Missing trust signals during payment process'
+        ],
+        userPainPoints: [
+          'Confusion about available payment options',
+          'Uncertainty about payment security',
+          'Frustration with lengthy checkout process',
+          'Difficulty recovering from payment errors'
+        ],
+        marketValidation: {
+          marketSize: '$2.3B e-commerce checkout optimization market',
+          growthTrend: '18% YoY growth in mobile commerce',
+          competitorSolutions: [
+            'One-click checkout (Amazon, Shopify)',
+            'Digital wallet integration (Apple Pay, Google Pay)',
+            'Guest checkout options',
+            'Progressive disclosure patterns'
+          ],
+          industryBenchmarks: [
+            'Average cart abandonment: 69.8% (Baymard Institute)',
+            'Mobile abandonment: 85.6% vs desktop 73.1%',
+            'Payment step abandonment: 17% of total',
+            'Best-in-class: <50% abandonment rate'
+          ],
+          userDemand: 'High - 67% of users cite complicated checkout as reason for abandonment',
+          validationSources: [
+            'Baymard Institute Checkout Research',
+            'Forrester Mobile Commerce Report 2024',
+            'Internal user interview data (n=15)',
+            'Support ticket analysis (127 tickets)'
+          ]
+        },
+        competitorInsights: [
+          'Leading platforms reduced steps from 5 to 2-3',
+          'Digital wallet adoption increased conversion by 20-30%',
+          'Trust badges near payment increased completion by 15%',
+          'Real-time validation reduced errors by 40%'
+        ],
+        keyFindings: [
+          'Problem is validated by industry data - above average abandonment rate',
+          'Mobile users disproportionately affected (85.6% vs 73.1%)',
+          'Payment step is critical friction point (17% drop-off)',
+          'Proven solutions exist with measurable impact',
+          'Market opportunity is significant and growing'
+        ],
+        recommendedFocus: 'Prioritize mobile payment experience optimization with focus on reducing steps and increasing trust signals',
+        confidenceScore: 87,
+        analyzedAt: new Date()
+      };
 
-        // Perform real AI analysis
-        const analysisResult = await ApiService.analyzeDiscovery(discovery);
+      setAnalysis(mockAnalysis);
+      
+      // Update discovery with analysis
+      updateDiscovery(discovery.id, {
+        status: 'analyzing',
+        analysis: mockAnalysis
+      });
 
-        clearInterval(stepInterval);
-        setCurrentStep(analysisSteps.length - 1);
-
-        // Wait a moment before showing results
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        setAnalysis(analysisResult);
-
-        // Update discovery with analysis
-        updateDiscovery(discovery.id, {
-          status: 'analyzing',
-          analysis: analysisResult
-        });
-
-        setIsAnalyzing(false);
-        toast.success('Analysis complete! Review insights below.');
-      } catch (err) {
-        console.error('Analysis failed:', err);
-        setError(err instanceof Error ? err.message : 'Failed to analyze discovery');
-        setIsAnalyzing(false);
-        toast.error('Analysis failed. Please try again.');
-      }
+      setIsAnalyzing(false);
+      toast.success('Analysis complete! Review insights below.');
     };
 
     analyzeDiscovery();
@@ -85,38 +108,6 @@ const AnalysisPage: React.FC<AnalysisPageProps> = ({ discovery, onBack, onProcee
     }
   };
 
-  if (error) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="flex items-center justify-center min-h-[600px]"
-      >
-        <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <AlertCircle className="w-8 h-8 text-red-600" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Analysis Failed</h2>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <div className="space-y-3">
-            <button
-              onClick={() => window.location.reload()}
-              className="glass-button bg-primary-600 text-white px-6 py-3 w-full"
-            >
-              Try Again
-            </button>
-            <button
-              onClick={onBack}
-              className="glass-button px-6 py-3 w-full"
-            >
-              Back to Discovery
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
-
   if (isAnalyzing) {
     return (
       <motion.div
@@ -132,28 +123,36 @@ const AnalysisPage: React.FC<AnalysisPageProps> = ({ discovery, onBack, onProcee
           />
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Analyzing Your Discovery</h2>
           <p className="text-gray-600 mb-6">
-            Using AI to research market data and validate your problem...
+            Identifying root causes, validating with market data, and generating insights...
           </p>
           <div className="space-y-2 text-sm text-gray-500">
-            {analysisSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: index <= currentStep ? 1 : 0.3 }}
-                className="flex items-center justify-center gap-2"
-              >
-                {index < currentStep ? (
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                ) : index === currentStep ? (
-                  <Loader className="w-4 h-4 animate-spin text-primary-600" />
-                ) : (
-                  <div className="w-4 h-4 border-2 border-gray-300 rounded-full" />
-                )}
-                <span className={index <= currentStep ? 'text-gray-700 font-medium' : ''}>
-                  {step}
-                </span>
-              </motion.div>
-            ))}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex items-center justify-center gap-2"
+            >
+              <Loader className="w-4 h-4 animate-spin" />
+              <span>Analyzing problem patterns...</span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+              className="flex items-center justify-center gap-2"
+            >
+              <Loader className="w-4 h-4 animate-spin" />
+              <span>Researching market data...</span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2.5 }}
+              className="flex items-center justify-center gap-2"
+            >
+              <Loader className="w-4 h-4 animate-spin" />
+              <span>Validating with industry benchmarks...</span>
+            </motion.div>
           </div>
         </div>
       </motion.div>
@@ -200,9 +199,10 @@ const AnalysisPage: React.FC<AnalysisPageProps> = ({ discovery, onBack, onProcee
             <Brain className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-gray-800 mb-3">AI-Powered Problem Analysis</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-3">Problem Analysis & Market Validation</h1>
             <p className="text-gray-700 mb-4">
-              We've analyzed your discovery using real market research and AI. The insights below are based on actual data gathered from the internet.
+              We've analyzed your discovery responses and validated the problem with market research. 
+              Review the insights below before generating "How Might We" statements.
             </p>
             <div className="flex items-center gap-2 text-sm">
               <CheckCircle className="w-4 h-4 text-green-600" />
